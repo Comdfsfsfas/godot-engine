@@ -88,6 +88,9 @@ void CreateDialog::_fill_type_list() {
 		StringName type = I->get();
 		if (!_should_hide_type(type)) {
 			type_list.push_back(type);
+			HashMap<String, DocData::ClassDoc>::Iterator class_doc = EditorHelp::get_doc_data()->class_list.find(type);
+			const String &description = DTR(class_doc ? class_doc->value.brief_description : "");
+			type_description[type] = description;
 
 			if (!ed.get_custom_types().has(type)) {
 				continue;
@@ -192,7 +195,8 @@ void CreateDialog::_update_search() {
 
 	for (List<StringName>::Element *I = type_list.front(); I; I = I->next()) {
 		StringName candidate = I->get();
-		if (empty_search || search_text.is_subsequence_ofn(candidate)) {
+		String decsmatch = type_description[candidate];
+		if (empty_search || search_text.is_subsequence_ofn(candidate)||search_text.is_subsequence_ofn(decsmatch)) {
 			_add_type(candidate, ClassDB::class_exists(candidate) ? TypeCategory::CPP_TYPE : TypeCategory::OTHER_TYPE);
 
 			// Determine the best match for an non-empty search.
@@ -382,6 +386,7 @@ float CreateDialog::_score_type(const String &p_type, const String &p_search) co
 
 void CreateDialog::_cleanup() {
 	type_list.clear();
+	type_description.clear();
 	favorite_list.clear();
 	favorites->clear();
 	recent->clear();

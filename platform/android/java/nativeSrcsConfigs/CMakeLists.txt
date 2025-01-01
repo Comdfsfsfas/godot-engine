@@ -14,6 +14,8 @@ set(OPENXR_INCLUDE_DIR "${GODOT_ROOT_DIR}/thirdparty/openxr/include" CACHE STRIN
 file(GLOB_RECURSE SOURCES ${GODOT_ROOT_DIR}/*.c**)
 file(GLOB_RECURSE HEADERS ${GODOT_ROOT_DIR}/*.h**)
 
+set(CMAKE_BUILD_TYPE "Debug")
+
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 target_include_directories(${PROJECT_NAME}
         SYSTEM PUBLIC

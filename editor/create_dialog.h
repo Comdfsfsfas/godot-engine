@@ -65,6 +65,7 @@ class CreateDialog : public ConfirmationDialog {
 	HashMap<String, String> custom_type_parents;
 	HashMap<String, int> custom_type_indices;
 	List<StringName> type_list;
+	HashMap<StringName,String> type_description;
 	HashSet<StringName> type_blacklist;
 
 	void _update_search();
@@ -76,7 +77,7 @@ class CreateDialog : public ConfirmationDialog {
 
 	void _fill_type_list();
 	void _cleanup();
-
+	
 	void _sbox_input(const Ref<InputEvent> &p_ie);
 	void _text_changed(const String &p_newtext);
 	void select_type(const String &p_type, bool p_center_on_item = true);
